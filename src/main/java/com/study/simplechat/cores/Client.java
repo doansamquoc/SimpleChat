@@ -7,14 +7,10 @@ import java.io.PrintWriter;
 import java.net.Socket;
 
 import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-import com.formdev.flatlaf.FlatLaf;
-import com.formdev.flatlaf.FlatLightLaf;
-import com.formdev.flatlaf.themes.FlatMacDarkLaf;
-import com.formdev.flatlaf.themes.FlatMacLightLaf;
 import com.study.simplechat.configs.Config;
+import com.study.simplechat.configs.ThemeConfig;
 import com.study.simplechat.views.Login;
 
 public class Client {
@@ -71,7 +67,7 @@ public class Client {
                 }
             }
         } catch (IOException e) {
-            System.out.println("Kết nối đã đóng.");
+            System.out.println("Disconnected.");
         }
     }
 
@@ -80,20 +76,17 @@ public class Client {
     }
 
     public static void main(String[] args) throws IOException {
+        // Initalizing client instance
         Client.getInstance();
 
+        // Initializing theme
         try {
-            UIManager.setLookAndFeel(new FlatMacLightLaf());
-            UIManager.put("TextComponent.arc", 15);
-            UIManager.put("Button.arc", 16);
-            UIManager.put("List.arc", 15);
-            UIManager.put("ScrollPane.arc", 15);
-
-            UIManager.put("Panel.arc", 20);
-        } catch (UnsupportedLookAndFeelException exception) {
-            exception.printStackTrace();
+            new ThemeConfig();
+        } catch (UnsupportedLookAndFeelException e) {
+            e.printStackTrace();
         }
 
+        // Start client
         Login login = new Login();
         SwingUtilities.invokeLater(() -> {
             login.setVisible(true);
